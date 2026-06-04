@@ -23,6 +23,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "ollama": "^0.6.3"
+    "dotenv": "^17.4.2",
+    "ollama": "^0.6.3",
+    "vite": "^8.0.16"
   }
 }
