@@ -35,9 +35,9 @@ app.post('/api/brainstorm', async (req, res) => {
       messages: [
         {
           role: 'system',
-          content: `You are a focus and brainstorming assistant. 
-          Take the user's messy thoughts, goal, or raw topic and break it down into a strict, highly actionable 3-step action plan. 
-          Be incredibly concise, sharp, and practical.`
+         content: `You are a focus and brainstorming assistant. 
+Analyze the user's messy thoughts. Based on how complex the goal is, create a step-by-step action plan. 
+Do not use a fixed number of steps; instead, provide as many practical steps as necessary to logically complete the goal, numbering them sequentially.`
         },
         { role: 'user', content: topic }
       ],

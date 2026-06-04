@@ -11,13 +11,16 @@ document.getElementById('generateBtn').addEventListener('click', async () => {
   btn.disabled = true;
 
   try {
-    const response = await fetch('/api/brainstorm', {
+    const response = await fetch('/.netlify/functions/brainstorm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ topic: input })
     });
 
-    outputDiv.textContent = ''; // Clear loading text
+    const data = await response.json();
+if (data.text) {
+  outputDiv.textContent = data.text;
+}
 
     // Read streams using the browser's Fetch stream reader API
     const reader = response.body.getReader();

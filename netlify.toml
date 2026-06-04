@@ -1,0 +1,3 @@
+[build]
+  publish = "." # Tell Netlify your index.html is in the root directory
+  functions = "netlify/functions" # Tell Netlify where the backend code lives
