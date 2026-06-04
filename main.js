@@ -17,29 +17,42 @@ document.getElementById('generateBtn').addEventListener('click', async () => {
       body: JSON.stringify({ topic: input })
     });
 
-    const data = await response.json();
-if (data.text) {
-  outputDiv.textContent = data.text;
-}
+    const contentType = response.headers.get('Content-Type') || '';
 
-    // Read streams using the browser's Fetch stream reader API
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
+    // If the function returned JSON (common for Netlify serverless), parse it and stop.
+    if (contentType.includes('application/json')) {
+      const data = await response.json();
+      if (data.text) outputDiv.textContent = data.text;
 
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
+    } else if (contentType.includes('text/event-stream')) {
+      // Streamed SSE-style response: read with the stream reader.
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
 
-      const chunk = decoder.decode(value);
-      const lines = chunk.split('\n');
-      
-      for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          const data = JSON.parse(line.slice(6));
-          if (data.text) {
-            outputDiv.textContent += data.text;
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = JSON.parse(line.slice(6));
+            if (data.text) {
+              outputDiv.textContent += data.text;
+            }
           }
         }
+      }
+
+    } else {
+      // Fallback: try to parse JSON if content-type unknown.
+      try {
+        const data = await response.json();
+        if (data.text) outputDiv.textContent = data.text;
+      } catch (e) {
+        console.warn('Unknown response type and failed to parse JSON', e);
       }
     }
   } catch (error) {
