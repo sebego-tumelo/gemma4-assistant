@@ -1,0 +1,28 @@
+{
+  "name": "gemma4-assistant",
+  "version": "1.0.0",
+  "description": "\"Local-First\" Smart Terminal Assistant",
+  "keywords": [
+    "cli",
+    "gemma4",
+    "ollama"
+  ],
+  "homepage": "https://github.com/sebego-tumelo/gemma4-assistant#readme",
+  "bugs": {
+    "url": "https://github.com/sebego-tumelo/gemma4-assistant/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebego-tumelo/gemma4-assistant.git"
+  },
+  "license": "ISC",
+  "author": "tuti",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ollama": "^0.6.3"
+  }
+}
