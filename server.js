@@ -15,6 +15,11 @@ const ollama = new Ollama({
   }
 });
 
+import path from 'path';
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve('index.html'));
+});
+
 // Secure API endpoint for brainstorming
 app.post('/api/brainstorm', async (req, res) => {
   const { topic } = req.body;
